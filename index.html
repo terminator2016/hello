@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		.wrap{
+			height: 500px;
+			width: 600px;
+			margin:60px auto;
+			overflow: hidden;
+			position: relative;
+
+		}
+		.wrap ul{
+			position: absolute;
+		}
+		.wrap ul li{
+			height: 500px;
+		}
+		.wrap ol{
+			position: absolute;
+			right: 5px;
+			bottom: 10px;
+		}
+		.wrap ol li{
+			height: 20px;
+			width: 20px;
+			background: #ccc;
+			border:1px solid #666;
+			margin-left: 5px;
+			color:#000;
+			float: left;
+			line-height: 20px;
+			text-align: center;
+			cursor: pointer;
+		}
+		.wrap ol .on{
+			background::E97305;
+			color:#fff;
+		}
+	</style>
+	<script type="text/javascript">
+	function $(id){
+		return typeof id==='string'?document.getElementById(id):id;
+	}
+	window.onload=function(){
+		var wrap=$("wrap");
+		var pics=$("pic").getElementsByTagName("li");
+		var list=$("list").getElementsByTagName("li");
+		var index=0;
+		var timer=null;
+
+		for(var i=0; i<list.length;i++){
+			list[i].id=i;
+			list[i].onmouseover=function(){
+				for(var j=0;j<list.length;j++){
+					list[j].className="";
+					pics[j].style.display="none";
+
+				}
+				list[this.id].className="on";
+				pics[this.id].style.display="block";
+			}
+		}
+		if(timer){
+			clearInterval(timer);
+			timer=null;
+		}
+		var timer=setInterval(function(){
+			for(var j=0;j<list.length;j++){
+				list[j].className="";
+				pics[j].style.display="none";
+			}
+			list[this.id].className="on";
+			pics[this.id].style.display="block";
+		},2000)
+		function auto(){
+			index++;
+			if(index>list.length){
+				index=0;
+			}
+			for(var j=0;j<list.length;j++){
+				list[j].className="";
+				pics[j].style.display="none";
+			}
+			list[index].className="on";
+			pics[index].style.display="block";
+		}
+		wrap.onmouseover=function(){
+			clearInterval(timer);
+		}
+		wrap.onmouseout=function(){
+			timer=setInterval(auto,2000);	
+		}
+			}
+	
+	</script>
+</head>
+<body>
+	<div class="wrap" id="wrap">
+		<ul id="pic">
+			<li><img src="img/a1.jpg"></li>
+			<li><img src="img/a2.jpg"></li>
+			<li><img src="img/a3.jpg"></li>
+			<li><img src="img/a4.jpg"></li>
+			<li><img src="img/a5.jpg"></li>
+		</ul>
+		<ol id="list">
+			<li class="on">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ol>
+	</div>
+</body>
+</html>
